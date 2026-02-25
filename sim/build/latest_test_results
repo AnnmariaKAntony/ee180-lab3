@@ -1,0 +1,11 @@
+sub 1
+sll 1
+bne 0
+addiu 1
+bltz 0
+sltiu 1
+srl 1
+mul 0
+slti 1
+blez 0
+lbu 1
