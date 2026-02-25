@@ -4,7 +4,7 @@ xori 1
 jalr 0
 jr 0
 fwd_idrs_ex 1
-mul 0
+mul 1
 srl 1
 lb 1
 lh 1
@@ -44,6 +44,6 @@ movn 1
 lui 1
 andi 1
 blez 0
-nor 0
+nor 1
 slti 1
 slt 1
