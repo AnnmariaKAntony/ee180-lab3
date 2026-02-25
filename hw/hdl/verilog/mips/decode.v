@@ -23,6 +23,7 @@ module decode (
     output wire mem_we,
     output wire [31:0] mem_write_data,
     output wire mem_read,
+    output wire mem_half,
     output wire mem_byte,
     output wire mem_signextend,
     output wire reg_we,
@@ -144,6 +145,7 @@ module decode (
             {`LUI, `DC6}:       alu_opcode = `ALU_PASSY;
             // ADDED
             {`XORI, `DC6}:      alu_opcode = `ALU_XOR;
+            {`SH, `DC6}:        alu_opcode = `ALU_ADD;
             default:            alu_opcode = `ALU_PASSX;
     	endcase
     end
@@ -235,8 +237,10 @@ module decode (
 //******************************************************************************
 // Memory control
 //******************************************************************************
-    assign mem_we = |{op == `SW, op == `SB, op == `SC};    // write to memory
-    assign mem_read = |{op == `LW, op == `LB, op == `LBU};  // read from memory   
+    assign mem_we = |{op == `SW, op == `SB, op == `SC, op == `SH};    // write to memory
+    assign mem_read = |{op == `LW, op == `LB, op == `LBU, op == `LH};  // read from memory   
+
+    assign mem_half = |{op == `LH, op == `SH}; // memory operations use only half byte
 
     assign mem_byte = |{op == `SB, op == `LB, op == `LBU};    // memory operations use only one byte
     assign mem_signextend = ~|{op == `LBU};     // sign extend sub-word memory reads
