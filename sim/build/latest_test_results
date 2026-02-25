@@ -53,10 +53,10 @@ stall_idrs_ex 1
 add 1
 andi 1
 fwd_idrt_mem 1
-srav 0
+srav 1
 subu 1
 movn 1
-sra 0
+sra 1
 bgez 0
 addu 1
 j 1
