@@ -91,9 +91,11 @@ module decode (
     wire isSRL = (op == `SPECIAL) & (funct == `SRL);
     wire isSLLV = (op == `SPECIAL) & (funct == `SLLV);
     wire isSRLV = (op == `SPECIAL) & (funct == `SRLV);
+    wire isSRA = (op == `SPECIAL) & (funct == `SRA);
+    wire isSRAV = (op == `SPECIAL) & (funct == `SRAV);
 
-    wire isShiftImm = isSLL | isSRL;
-    wire isShift = isShiftImm | isSLLV | isSRLV;
+    wire isShiftImm = isSLL | isSRL | isSRA ;
+    wire isShift = isShiftImm | isSLLV | isSRLV | isSRAV;
 
 //******************************************************************************
 // ALU instructions decode / control signal for ALU datapath
@@ -148,6 +150,8 @@ module decode (
             // ADDED
             {`XORI, `DC6}:      alu_opcode = `ALU_XOR;
             {`SH, `DC6}:        alu_opcode = `ALU_ADD;
+            {`SPECIAL, `SRA}:   alu_opcode = `ALU_SRA;
+            {`SPECIAL, `SRAV}:  alu_opcode = `ALU_SRA;
             default:            alu_opcode = `ALU_PASSX;
     	endcase
     end
