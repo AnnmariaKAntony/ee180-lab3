@@ -43,6 +43,8 @@ module alu (
             `ALU_PASSY: alu_result = alu_op_y;
             // ADDED
             `ALU_XOR: alu_result = alu_op_x ^ alu_op_y;
+            `ALU_MUL: alu_result = alu_op_x_signed * alu_op_y_signed;
+            `ALU_NOR: alu_result = ~(alu_op_x | alu_op_y);
             `ALU_SRA: alu_result = alu_op_y_signed >>> alu_op_x[4:0];
             default:    alu_result = 32'hxxxxxxxx;   // undefined
         endcase
