@@ -1,0 +1,69 @@
+
+build/app:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+00000000 <boot>:
+       0:	3c108002 	lui	s0,0x8002
+       4:	34110001 	li	s1,0x1
+       8:	34120001 	li	s2,0x1
+       c:	3c081234 	lui	t0,0x1234
+      10:	35085678 	ori	t0,t0,0x5678
+      14:	390900ff 	xori	t1,t0,0xff
+      18:	3c0a1234 	lui	t2,0x1234
+      1c:	354a5687 	ori	t2,t2,0x5687
+      20:	012a5826 	xor	t3,t1,t2
+      24:	2d6b0001 	sltiu	t3,t3,1
+      28:	024b9024 	and	s2,s2,t3
+      2c:	3c08dead 	lui	t0,0xdead
+      30:	3508beef 	ori	t0,t0,0xbeef
+      34:	39090000 	xori	t1,t0,0x0
+      38:	3c0adead 	lui	t2,0xdead
+      3c:	354abeef 	ori	t2,t2,0xbeef
+      40:	012a5826 	xor	t3,t1,t2
+      44:	2d6b0001 	sltiu	t3,t3,1
+      48:	024b9024 	and	s2,s2,t3
+      4c:	3c081234 	lui	t0,0x1234
+      50:	35080000 	ori	t0,t0,0x0
+      54:	3909ffff 	xori	t1,t0,0xffff
+      58:	3c0a1234 	lui	t2,0x1234
+      5c:	354affff 	ori	t2,t2,0xffff
+      60:	012a5826 	xor	t3,t1,t2
+      64:	2d6b0001 	sltiu	t3,t3,1
+      68:	024b9024 	and	s2,s2,t3
+      6c:	00004021 	move	t0,zero
+      70:	39098001 	xori	t1,t0,0x8001
+      74:	3c0a0000 	lui	t2,0x0
+      78:	354a8001 	ori	t2,t2,0x8001
+      7c:	012a5826 	xor	t3,t1,t2
+      80:	2d6b0001 	sltiu	t3,t3,1
+      84:	024b9024 	and	s2,s2,t3
+      88:	3c08ffff 	lui	t0,0xffff
+      8c:	35080000 	ori	t0,t0,0x0
+      90:	3909ffff 	xori	t1,t0,0xffff
+      94:	3c0affff 	lui	t2,0xffff
+      98:	354affff 	ori	t2,t2,0xffff
+      9c:	012a5826 	xor	t3,t1,t2
+      a0:	2d6b0001 	sltiu	t3,t3,1
+      a4:	024b9024 	and	s2,s2,t3
+      a8:	34081200 	li	t0,0x1200
+      ac:	25080034 	addiu	t0,t0,52
+      b0:	390900f0 	xori	t1,t0,0xf0
+      b4:	340a12c4 	li	t2,0x12c4
+      b8:	012a5826 	xor	t3,t1,t2
+      bc:	2d6b0001 	sltiu	t3,t3,1
+      c0:	024b9024 	and	s2,s2,t3
+      c4:	3c080000 	lui	t0,0x0
+      c8:	350800ff 	ori	t0,t0,0xff
+      cc:	390000ff 	xori	zero,t0,0xff
+      d0:	00004821 	move	t1,zero
+      d4:	00005021 	move	t2,zero
+      d8:	012a5826 	xor	t3,t1,t2
+      dc:	2d6b0001 	sltiu	t3,t3,1
+      e0:	024b9024 	and	s2,s2,t3
+      e4:	ae120004 	sw	s2,4(s0)
+      e8:	ae110000 	sw	s1,0(s0)
+      ec:	0800003b 	j	ec <boot+0xec>
+      f0:	00000000 	nop
+	...

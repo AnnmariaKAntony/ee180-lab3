@@ -1,0 +1,72 @@
+
+build/app:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+00000000 <boot>:
+       0:	3c108002 	lui	s0,0x8002
+       4:	34110001 	li	s1,0x1
+       8:	34120001 	li	s2,0x1
+       c:	3c130000 	lui	s3,0x0
+      10:	36734200 	ori	s3,s3,0x4200
+      14:	3c081122 	lui	t0,0x1122
+      18:	35083344 	ori	t0,t0,0x3344
+      1c:	ae680000 	sw	t0,0(s3)
+      20:	8e690000 	lw	t1,0(s3)
+      24:	3c0a1122 	lui	t2,0x1122
+      28:	354a3344 	ori	t2,t2,0x3344
+      2c:	012a5826 	xor	t3,t1,t2
+      30:	2d6b0001 	sltiu	t3,t3,1
+      34:	024b9024 	and	s2,s2,t3
+      38:	3c08de0f 	lui	t0,0xde0f
+      3c:	3508beef 	ori	t0,t0,0xbeef
+      40:	ae680004 	sw	t0,4(s3)
+      44:	8e690004 	lw	t1,4(s3)
+      48:	3c0ade0f 	lui	t2,0xde0f
+      4c:	354abeef 	ori	t2,t2,0xbeef
+      50:	012a5826 	xor	t3,t1,t2
+      54:	2d6b0001 	sltiu	t3,t3,1
+      58:	024b9024 	and	s2,s2,t3
+      5c:	3c08a5a5 	lui	t0,0xa5a5
+      60:	35085a5a 	ori	t0,t0,0x5a5a
+      64:	ae680004 	sw	t0,4(s3)
+      68:	8e690004 	lw	t1,4(s3)
+      6c:	3c0aa5a5 	lui	t2,0xa5a5
+      70:	354a5a5a 	ori	t2,t2,0x5a5a
+      74:	012a5826 	xor	t3,t1,t2
+      78:	2d6b0001 	sltiu	t3,t3,1
+      7c:	024b9024 	and	s2,s2,t3
+      80:	3c088000 	lui	t0,0x8000
+      84:	35080001 	ori	t0,t0,0x1
+      88:	ae680008 	sw	t0,8(s3)
+      8c:	8e690008 	lw	t1,8(s3)
+      90:	3c0a8000 	lui	t2,0x8000
+      94:	354a0001 	ori	t2,t2,0x1
+      98:	012a5826 	xor	t3,t1,t2
+      9c:	2d6b0001 	sltiu	t3,t3,1
+      a0:	024b9024 	and	s2,s2,t3
+      a4:	34081000 	li	t0,0x1000
+      a8:	25080234 	addiu	t0,t0,564
+      ac:	ae68000c 	sw	t0,12(s3)
+      b0:	8e69000c 	lw	t1,12(s3)
+      b4:	340a1234 	li	t2,0x1234
+      b8:	012a5826 	xor	t3,t1,t2
+      bc:	2d6b0001 	sltiu	t3,t3,1
+      c0:	024b9024 	and	s2,s2,t3
+      c4:	02607821 	move	t7,s3
+      c8:	25ef0010 	addiu	t7,t7,16
+      cc:	3c08cafe 	lui	t0,0xcafe
+      d0:	3508babe 	ori	t0,t0,0xbabe
+      d4:	ade80000 	sw	t0,0(t7)
+      d8:	8e690010 	lw	t1,16(s3)
+      dc:	3c0acafe 	lui	t2,0xcafe
+      e0:	354ababe 	ori	t2,t2,0xbabe
+      e4:	012a5826 	xor	t3,t1,t2
+      e8:	2d6b0001 	sltiu	t3,t3,1
+      ec:	024b9024 	and	s2,s2,t3
+      f0:	ae120004 	sw	s2,4(s0)
+      f4:	ae110000 	sw	s1,0(s0)
+      f8:	0800003e 	j	f8 <boot+0xf8>
+      fc:	00000000 	nop
+	...

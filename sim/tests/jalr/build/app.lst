@@ -1,0 +1,96 @@
+
+build/app:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+00000000 <boot>:
+       0:	3c108002 	lui	s0,0x8002
+       4:	34110001 	li	s1,0x1
+       8:	34120001 	li	s2,0x1
+       c:	3c1d8003 	lui	sp,0x8003
+      10:	37bdf000 	ori	sp,sp,0xf000
+      14:	340f0000 	li	t7,0x0
+      18:	3c080000 	lui	t0,0x0
+      1c:	250800d8 	addiu	t0,t0,216
+      20:	0100f809 	jalr	t0
+      24:	25ef0001 	addiu	t7,t7,1
+
+00000028 <after_funcA>:
+      28:	25ef0008 	addiu	t7,t7,8
+      2c:	340a000f 	li	t2,0xf
+      30:	01ea5826 	xor	t3,t7,t2
+      34:	000b602b 	sltu	t4,zero,t3
+      38:	340d0001 	li	t5,0x1
+      3c:	01ac6823 	subu	t5,t5,t4
+      40:	024d9024 	and	s2,s2,t5
+      44:	340e0000 	li	t6,0x0
+      48:	3c1f1234 	lui	ra,0x1234
+      4c:	37ff5678 	ori	ra,ra,0x5678
+      50:	3c080000 	lui	t0,0x0
+      54:	250800e4 	addiu	t0,t0,228
+      58:	0100c809 	jalr	t9,t0
+      5c:	25ce0001 	addiu	t6,t6,1
+
+00000060 <after_funcB>:
+      60:	25ce0008 	addiu	t6,t6,8
+      64:	340a000f 	li	t2,0xf
+      68:	01ca5826 	xor	t3,t6,t2
+      6c:	000b602b 	sltu	t4,zero,t3
+      70:	340d0001 	li	t5,0x1
+      74:	01ac6823 	subu	t5,t5,t4
+      78:	024d9024 	and	s2,s2,t5
+      7c:	3c091234 	lui	t1,0x1234
+      80:	35295678 	ori	t1,t1,0x5678
+      84:	03e95826 	xor	t3,ra,t1
+      88:	000b602b 	sltu	t4,zero,t3
+      8c:	340d0001 	li	t5,0x1
+      90:	01ac6823 	subu	t5,t5,t4
+      94:	024d9024 	and	s2,s2,t5
+      98:	34180000 	li	t8,0x0
+      9c:	3c080000 	lui	t0,0x0
+      a0:	250800f0 	addiu	t0,t0,240
+      a4:	0100f809 	jalr	t0
+      a8:	27180001 	addiu	t8,t8,1
+
+000000ac <after_funcC>:
+      ac:	27180040 	addiu	t8,t8,64
+      b0:	340a007f 	li	t2,0x7f
+      b4:	030a5826 	xor	t3,t8,t2
+      b8:	000b602b 	sltu	t4,zero,t3
+      bc:	340d0001 	li	t5,0x1
+      c0:	01ac6823 	subu	t5,t5,t4
+      c4:	024d9024 	and	s2,s2,t5
+      c8:	ae120004 	sw	s2,4(s0)
+      cc:	ae110000 	sw	s1,0(s0)
+      d0:	08000034 	j	d0 <after_funcC+0x24>
+      d4:	00000000 	nop
+
+000000d8 <funcA>:
+      d8:	25ef0002 	addiu	t7,t7,2
+      dc:	03e00008 	jr	ra
+      e0:	25ef0004 	addiu	t7,t7,4
+
+000000e4 <funcB>:
+      e4:	25ce0002 	addiu	t6,t6,2
+      e8:	03200008 	jr	t9
+      ec:	25ce0004 	addiu	t6,t6,4
+
+000000f0 <funcC>:
+      f0:	27bdfff0 	addiu	sp,sp,-16
+      f4:	afbf0000 	sw	ra,0(sp)
+      f8:	3c080000 	lui	t0,0x0
+      fc:	2508011c 	addiu	t0,t0,284
+     100:	0100f809 	jalr	t0
+     104:	27180002 	addiu	t8,t8,2
+     108:	27180004 	addiu	t8,t8,4
+     10c:	8fbf0000 	lw	ra,0(sp)
+     110:	27bd0010 	addiu	sp,sp,16
+     114:	03e00008 	jr	ra
+     118:	27180008 	addiu	t8,t8,8
+
+0000011c <funcD>:
+     11c:	27180010 	addiu	t8,t8,16
+     120:	03e00008 	jr	ra
+     124:	27180020 	addiu	t8,t8,32
+	...

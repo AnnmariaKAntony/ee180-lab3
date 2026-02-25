@@ -1,0 +1,94 @@
+
+build/app:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+00000000 <boot>:
+       0:	3c108002 	lui	s0,0x8002
+       4:	34110001 	li	s1,0x1
+       8:	34120001 	li	s2,0x1
+       c:	34080001 	li	t0,0x1
+      10:	340f0000 	li	t7,0x0
+      14:	1d000004 	bgtz	t0,28 <T1_taken>
+      18:	25ef0001 	addiu	t7,t7,1
+      1c:	25ef0004 	addiu	t7,t7,4
+      20:	0800000b 	j	2c <T1_after>
+      24:	00000000 	nop
+
+00000028 <T1_taken>:
+      28:	25ef0002 	addiu	t7,t7,2
+
+0000002c <T1_after>:
+      2c:	340a0003 	li	t2,0x3
+      30:	01ea5826 	xor	t3,t7,t2
+      34:	000b602b 	sltu	t4,zero,t3
+      38:	340d0001 	li	t5,0x1
+      3c:	01ac6823 	subu	t5,t5,t4
+      40:	024d9024 	and	s2,s2,t5
+      44:	34080000 	li	t0,0x0
+      48:	340f0000 	li	t7,0x0
+      4c:	1d000004 	bgtz	t0,60 <T2_taken>
+      50:	25ef0001 	addiu	t7,t7,1
+      54:	25ef0004 	addiu	t7,t7,4
+      58:	08000019 	j	64 <T2_after>
+      5c:	00000000 	nop
+
+00000060 <T2_taken>:
+      60:	25ef0002 	addiu	t7,t7,2
+
+00000064 <T2_after>:
+      64:	340a0005 	li	t2,0x5
+      68:	01ea5826 	xor	t3,t7,t2
+      6c:	000b602b 	sltu	t4,zero,t3
+      70:	340d0001 	li	t5,0x1
+      74:	01ac6823 	subu	t5,t5,t4
+      78:	024d9024 	and	s2,s2,t5
+      7c:	2408ffff 	li	t0,-1
+      80:	340f0000 	li	t7,0x0
+      84:	1d000004 	bgtz	t0,98 <T3_taken>
+      88:	25ef0001 	addiu	t7,t7,1
+      8c:	25ef0004 	addiu	t7,t7,4
+      90:	08000027 	j	9c <T3_after>
+      94:	00000000 	nop
+
+00000098 <T3_taken>:
+      98:	25ef0002 	addiu	t7,t7,2
+
+0000009c <T3_after>:
+      9c:	340a0005 	li	t2,0x5
+      a0:	01ea5826 	xor	t3,t7,t2
+      a4:	000b602b 	sltu	t4,zero,t3
+      a8:	340d0001 	li	t5,0x1
+      ac:	01ac6823 	subu	t5,t5,t4
+      b0:	024d9024 	and	s2,s2,t5
+      b4:	3c087fff 	lui	t0,0x7fff
+      b8:	3508ffff 	ori	t0,t0,0xffff
+      bc:	01007021 	move	t6,t0
+      c0:	340f0000 	li	t7,0x0
+      c4:	1d000004 	bgtz	t0,d8 <T4_taken>
+      c8:	25ef0001 	addiu	t7,t7,1
+      cc:	25ef0004 	addiu	t7,t7,4
+      d0:	08000037 	j	dc <T4_after>
+      d4:	00000000 	nop
+
+000000d8 <T4_taken>:
+      d8:	25ef0002 	addiu	t7,t7,2
+
+000000dc <T4_after>:
+      dc:	340a0003 	li	t2,0x3
+      e0:	01ea5826 	xor	t3,t7,t2
+      e4:	000b602b 	sltu	t4,zero,t3
+      e8:	340d0001 	li	t5,0x1
+      ec:	01ac6823 	subu	t5,t5,t4
+      f0:	024d9024 	and	s2,s2,t5
+      f4:	010e5826 	xor	t3,t0,t6
+      f8:	000b602b 	sltu	t4,zero,t3
+      fc:	340d0001 	li	t5,0x1
+     100:	01ac6823 	subu	t5,t5,t4
+     104:	024d9024 	and	s2,s2,t5
+     108:	ae120004 	sw	s2,4(s0)
+     10c:	ae110000 	sw	s1,0(s0)
+     110:	08000044 	j	110 <T4_after+0x34>
+     114:	00000000 	nop
+	...

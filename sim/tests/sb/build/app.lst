@@ -1,0 +1,61 @@
+
+build/app:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+00000000 <boot>:
+       0:	3c108002 	lui	s0,0x8002
+       4:	34110001 	li	s1,0x1
+       8:	34120001 	li	s2,0x1
+       c:	3c130000 	lui	s3,0x0
+      10:	36734000 	ori	s3,s3,0x4000
+      14:	3c081122 	lui	t0,0x1122
+      18:	35083344 	ori	t0,t0,0x3344
+      1c:	ae680000 	sw	t0,0(s3)
+      20:	340900aa 	li	t1,0xaa
+      24:	a2690000 	sb	t1,0(s3)
+      28:	8e6a0000 	lw	t2,0(s3)
+      2c:	3c0baa22 	lui	t3,0xaa22
+      30:	356b3344 	ori	t3,t3,0x3344
+      34:	014b6026 	xor	t4,t2,t3
+      38:	2d8c0001 	sltiu	t4,t4,1
+      3c:	024c9024 	and	s2,s2,t4
+      40:	340900bb 	li	t1,0xbb
+      44:	a2690001 	sb	t1,1(s3)
+      48:	8e6a0000 	lw	t2,0(s3)
+      4c:	3c0baabb 	lui	t3,0xaabb
+      50:	356b3344 	ori	t3,t3,0x3344
+      54:	014b6026 	xor	t4,t2,t3
+      58:	2d8c0001 	sltiu	t4,t4,1
+      5c:	024c9024 	and	s2,s2,t4
+      60:	340900cc 	li	t1,0xcc
+      64:	a2690002 	sb	t1,2(s3)
+      68:	8e6a0000 	lw	t2,0(s3)
+      6c:	3c0baabb 	lui	t3,0xaabb
+      70:	356bcc44 	ori	t3,t3,0xcc44
+      74:	014b6026 	xor	t4,t2,t3
+      78:	2d8c0001 	sltiu	t4,t4,1
+      7c:	024c9024 	and	s2,s2,t4
+      80:	340900dd 	li	t1,0xdd
+      84:	a2690003 	sb	t1,3(s3)
+      88:	8e6a0000 	lw	t2,0(s3)
+      8c:	3c0baabb 	lui	t3,0xaabb
+      90:	356bccdd 	ori	t3,t3,0xccdd
+      94:	014b6026 	xor	t4,t2,t3
+      98:	2d8c0001 	sltiu	t4,t4,1
+      9c:	024c9024 	and	s2,s2,t4
+      a0:	34090080 	li	t1,0x80
+      a4:	2529ffff 	addiu	t1,t1,-1
+      a8:	a2690001 	sb	t1,1(s3)
+      ac:	8e6a0000 	lw	t2,0(s3)
+      b0:	3c0baa7f 	lui	t3,0xaa7f
+      b4:	356bccdd 	ori	t3,t3,0xccdd
+      b8:	014b6026 	xor	t4,t2,t3
+      bc:	2d8c0001 	sltiu	t4,t4,1
+      c0:	024c9024 	and	s2,s2,t4
+      c4:	ae120004 	sw	s2,4(s0)
+      c8:	ae110000 	sw	s1,0(s0)
+      cc:	08000033 	j	cc <boot+0xcc>
+      d0:	00000000 	nop
+	...

@@ -1,0 +1,90 @@
+
+build/app:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+00000000 <boot>:
+       0:	3c108002 	lui	s0,0x8002
+       4:	34110001 	li	s1,0x1
+       8:	34120001 	li	s2,0x1
+       c:	3c08aaaa 	lui	t0,0xaaaa
+      10:	3508aaaa 	ori	t0,t0,0xaaaa
+      14:	3c095555 	lui	t1,0x5555
+      18:	35295555 	ori	t1,t1,0x5555
+      1c:	01095025 	or	t2,t0,t1
+      20:	3c0bffff 	lui	t3,0xffff
+      24:	356bffff 	ori	t3,t3,0xffff
+      28:	014b6026 	xor	t4,t2,t3
+      2c:	000c682b 	sltu	t5,zero,t4
+      30:	340e0001 	li	t6,0x1
+      34:	01cd7023 	subu	t6,t6,t5
+      38:	024e9024 	and	s2,s2,t6
+      3c:	3c081234 	lui	t0,0x1234
+      40:	35085678 	ori	t0,t0,0x5678
+      44:	01005025 	move	t2,t0
+      48:	3c0b1234 	lui	t3,0x1234
+      4c:	356b5678 	ori	t3,t3,0x5678
+      50:	014b6026 	xor	t4,t2,t3
+      54:	000c682b 	sltu	t5,zero,t4
+      58:	340e0001 	li	t6,0x1
+      5c:	01cd7023 	subu	t6,t6,t5
+      60:	024e9024 	and	s2,s2,t6
+      64:	3c09ffff 	lui	t1,0xffff
+      68:	3529ffff 	ori	t1,t1,0xffff
+      6c:	01095025 	or	t2,t0,t1
+      70:	3c0bffff 	lui	t3,0xffff
+      74:	356bffff 	ori	t3,t3,0xffff
+      78:	014b6026 	xor	t4,t2,t3
+      7c:	000c682b 	sltu	t5,zero,t4
+      80:	340e0001 	li	t6,0x1
+      84:	01cd7023 	subu	t6,t6,t5
+      88:	024e9024 	and	s2,s2,t6
+      8c:	3c08f0f0 	lui	t0,0xf0f0
+      90:	3508f0f0 	ori	t0,t0,0xf0f0
+      94:	3409000f 	li	t1,0xf
+      98:	01095025 	or	t2,t0,t1
+      9c:	3c0bf0f0 	lui	t3,0xf0f0
+      a0:	356bf0ff 	ori	t3,t3,0xf0ff
+      a4:	014b6026 	xor	t4,t2,t3
+      a8:	000c682b 	sltu	t5,zero,t4
+      ac:	340e0001 	li	t6,0x1
+      b0:	01cd7023 	subu	t6,t6,t5
+      b4:	024e9024 	and	s2,s2,t6
+      b8:	3c0800ff 	lui	t0,0xff
+      bc:	350800ff 	ori	t0,t0,0xff
+      c0:	3c090f0f 	lui	t1,0xf0f
+      c4:	35290f0f 	ori	t1,t1,0xf0f
+      c8:	01095025 	or	t2,t0,t1
+      cc:	3c0b0fff 	lui	t3,0xfff
+      d0:	356b0fff 	ori	t3,t3,0xfff
+      d4:	014b6026 	xor	t4,t2,t3
+      d8:	000c682b 	sltu	t5,zero,t4
+      dc:	340e0001 	li	t6,0x1
+      e0:	01cd7023 	subu	t6,t6,t5
+      e4:	024e9024 	and	s2,s2,t6
+      e8:	00004021 	move	t0,zero
+      ec:	34090001 	li	t1,0x1
+      f0:	01095025 	or	t2,t0,t1
+      f4:	000a5100 	sll	t2,t2,0x4
+      f8:	340b0010 	li	t3,0x10
+      fc:	014b6026 	xor	t4,t2,t3
+     100:	000c682b 	sltu	t5,zero,t4
+     104:	340e0001 	li	t6,0x1
+     108:	01cd7023 	subu	t6,t6,t5
+     10c:	024e9024 	and	s2,s2,t6
+     110:	3c08ffff 	lui	t0,0xffff
+     114:	3508ffff 	ori	t0,t0,0xffff
+     118:	01000025 	move	zero,t0
+     11c:	00005021 	move	t2,zero
+     120:	00005821 	move	t3,zero
+     124:	014b6026 	xor	t4,t2,t3
+     128:	000c682b 	sltu	t5,zero,t4
+     12c:	340e0001 	li	t6,0x1
+     130:	01cd7023 	subu	t6,t6,t5
+     134:	024e9024 	and	s2,s2,t6
+     138:	ae120004 	sw	s2,4(s0)
+     13c:	ae110000 	sw	s1,0(s0)
+     140:	08000050 	j	140 <boot+0x140>
+     144:	00000000 	nop
+	...
