@@ -1,16 +1,6 @@
 ###############################################################################
 # File         : jal.S
 # Project      : EE180 Lab 3: MIPS
-#
-# Standards/Formatting:
-#   MIPS gas, soft tab, 80 column
-#
-# Description:
-#   Comprehensive test for the 'jal' instruction.
-#
-# Notes:
-#   - Avoids beq/bne/etc. Uses jal/jr/j only for control flow.
-#
 ###############################################################################
 
     .section .boot, "x"
@@ -20,45 +10,29 @@
     .ent    boot
 
 boot:
-    # Base address of status/test registers:
-    #   0x80020000: status ("done")
-    #   0x80020004: test result (1=pass, 0=fail)
     lui     $s0, 0x8002
-    ori     $s1, $zero, 1          # done value
-    ori     $s2, $zero, 1          # overall_ok = 1
-
-    # Put stack somewhere safe in kernel segment for our save/restore test
-    lui     $sp, 0x8003
-    ori     $sp, $sp, 0xF000       # $sp = 0x8003F000
-
-    ###########################################################################
-    # Helper convention (no macros):
-    #   diff = actual xor expected
-    #   neq  = (diff != 0) using sltu
-    #   ok   = 1 - neq
-    #   overall_ok &= ok
-    ###########################################################################
+    ori     $s1, $zero, 1
+    ori     $s2, $zero, 1
 
     ###########################################################################
     # Test 1: leaf call + delay slots
     #
-    # Marker t7 accumulates:
-    #   jal delay slot (in caller):            +1
-    #   func1 body before jr:                  +2
-    #   jr delay slot (in func1, on return):   +4
-    #   after return (in caller):              +8
-    #
-    # Expected: 1 + 2 + 4 + 8 = 15
+    # t7 accumulates:
+    #   jal delay slot:        +1
+    #   func1 body:            +2
+    #   jr delay slot:         +4
+    #   after return:          +8
+    # Expected: 15
     ###########################################################################
     ori     $t7, $zero, 0
 
     jal     func1
-    addiu   $t7, $t7, 1            # jal delay slot MUST execute
+    addiu   $t7, $t7, 1            # jal delay slot: +1
 
 after_func1:
-    addiu   $t7, $t7, 8
+    addiu   $t7, $t7, 8            # after return: +8
 
-    ori     $t2, $zero, 15         # expected
+    ori     $t2, $zero, 15
     xor     $t3, $t7, $t2
     sltu    $t4, $zero, $t3
     ori     $t5, $zero, 1
@@ -66,28 +40,27 @@ after_func1:
     and     $s2, $s2, $t5
 
     ###########################################################################
-    # Test 2: non-leaf function (nested jal) with $ra save/restore
+    # Test 2: nested call with $ra saved in register instead of memory
     #
-    # Marker t6 accumulates:
-    #   jal func2 delay slot (in caller):      +1
-    #   jal func3 delay slot (in func2):       +2
-    #   func3 body before jr:                  +16
-    #   jr delay slot (in func3):              +32
-    #   after return from func3 (in func2):    +4
-    #   jr delay slot (in func2):              +8
-    #   after return to caller (in main):      +64
-    #
-    # Expected: 1+2+16+32+4+8+64 = 127
+    # t6 accumulates:
+    #   jal func2 delay slot:          +1
+    #   jal func3 delay slot (func2):  +2
+    #   func3 body:                    +16
+    #   func3 jr delay slot:           +32
+    #   after func3 return (func2):    +4
+    #   func2 jr delay slot:           +8
+    #   after func2 return (main):     +64
+    # Expected: 127
     ###########################################################################
     ori     $t6, $zero, 0
 
     jal     func2
-    addiu   $t6, $t6, 1            # jal delay slot MUST execute
+    addiu   $t6, $t6, 1            # jal delay slot: +1
 
 after_func2:
-    addiu   $t6, $t6, 64
+    addiu   $t6, $t6, 64           # after return: +64
 
-    ori     $t2, $zero, 127        # expected
+    ori     $t2, $zero, 127
     xor     $t3, $t6, $t2
     sltu    $t4, $zero, $t3
     ori     $t5, $zero, 1
@@ -95,47 +68,76 @@ after_func2:
     and     $s2, $s2, $t5
 
     ###########################################################################
-    # Report result and finish
+    # Test 3: check $ra value is exactly after_call address
+    #
+    # After jal func4, $ra should equal after_func4
+    # xor of $ra and after_func4 address should be 0
     ###########################################################################
-    sw      $s2, 4($s0)            # test result (1=pass, 0=fail)
-    sw      $s1, 0($s0)            # done
+    jal     func4
+    nop
+
+after_func4:
+    # $ra should == after_func4
+    lui     $t0, %hi(after_func4)
+    ori     $t0, $t0, %lo(after_func4)
+
+    # mask top 4 bits of both
+    sll     $t1, $ra, 4
+    srl     $t1, $t1, 4
+    sll     $t2, $t0, 4
+    srl     $t2, $t2, 4
+
+    xor     $t3, $t1, $t2
+    sltu    $t4, $zero, $t3
+    ori     $t5, $zero, 1
+    subu    $t5, $t5, $t4
+    and     $s2, $s2, $t5
+
+    ###########################################################################
+    # Report
+    ###########################################################################
+    sw      $s2, 4($s0)
+    sw      $s1, 0($s0)
 
 $done:
     j       $done
     nop
 
 ###############################################################################
-# func1: leaf function
+# func1: leaf
 ###############################################################################
 func1:
-    addiu   $t7, $t7, 2
+    addiu   $t7, $t7, 2            # +2
     jr      $ra
-    addiu   $t7, $t7, 4            # jr delay slot MUST execute
+    addiu   $t7, $t7, 4            # jr delay slot: +4
 
 ###############################################################################
-# func2: non-leaf function; saves/restores $ra; calls func3
+# func2: non-leaf, saves $ra in $s4 (saved register, no memory needed)
 ###############################################################################
 func2:
-    addiu   $sp, $sp, -16
-    sw      $ra, 0($sp)
+    ori     $s4, $ra, 0            # save $ra to $s4
 
     jal     func3
-    addiu   $t6, $t6, 2            # jal delay slot MUST execute
+    addiu   $t6, $t6, 2            # jal delay slot: +2
 
-    addiu   $t6, $t6, 4
+    addiu   $t6, $t6, 4            # after func3 returns: +4
 
-    lw      $ra, 0($sp)
-    addiu   $sp, $sp, 16
-
-    jr      $ra
-    addiu   $t6, $t6, 8            # jr delay slot MUST execute
+    jr      $s4                    # return using saved $ra
+    addiu   $t6, $t6, 8            # jr delay slot: +8
 
 ###############################################################################
-# func3: leaf function called by func2
+# func3: leaf called by func2
 ###############################################################################
 func3:
-    addiu   $t6, $t6, 16
+    addiu   $t6, $t6, 16           # +16
     jr      $ra
-    addiu   $t6, $t6, 32           # jr delay slot MUST execute
+    addiu   $t6, $t6, 32           # jr delay slot: +32
+
+###############################################################################
+# func4: leaf, just returns immediately
+###############################################################################
+func4:
+    jr      $ra
+    nop
 
     .end    boot

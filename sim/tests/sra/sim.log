@@ -1,9 +1,37 @@
+SIMULATION STARTED
 Instruction Memory: tests/sra/build/app.hex
 WARNING: harness/userlogic_test.v:63: $readmemh(tests/sra/build/app.hex): Too many words in the file for the requested range [0:16383].
 No input data buffer
 No output buffer
 Running userlogic for maximum of 1000 cycles
 VCD info: dumpfile tests/sra/streamwave.vcd opened for output.
+t=5000 PC=0x00000000
+t=15000 PC=0x00000000
+t=25000 PC=0x00000000
+t=35000 PC=0x00000004
+t=45000 PC=0x00000008
+t=55000 WB: reg[16] <= 0x80020000
+t=55000 PC=0x0000000c
+t=65000 WB: reg[16] <= 0x80020000
+t=65000 PC=0x00000010
+t=75000 WB: reg[17] <= 0x00000001
+t=75000 PC=0x00000014
+t=85000 WB: reg[8] <= 0xdeaf0000
+t=85000 PC=0x00000018
+t=95000 WB: reg[8] <= 0xdeafbeef
+t=95000 PC=0x0000001c
+t=105000 WB: reg[9] <= 0xfdeafbee
+t=105000 PC=0x00000020
+t=115000 WB: reg[10] <= 0xfdea0000
+t=115000 PC=0x00000024
+t=125000 WB: reg[10] <= 0xfdeafbee
+t=125000 PC=0x00000028
+t=135000 WB: reg[11] <= 0x00000000
+t=135000 MEM WRITE: addr=0x80020004 data=0x00000001 en=1111
+t=135000 PC=0x0000002c
+t=145000 WB: reg[2] <= 0x00000001
+t=145000 MEM WRITE: addr=0x80020000 data=0x00000001 en=1111
+t=145000 PC=0x00000030
 Userlogic ran for 12 cycles
 status register = 1
 test register = 1

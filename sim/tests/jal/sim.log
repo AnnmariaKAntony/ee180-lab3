@@ -1,10 +1,200 @@
+SIMULATION STARTED
 Instruction Memory: tests/jal/build/app.hex
 WARNING: harness/userlogic_test.v:63: $readmemh(tests/jal/build/app.hex): Too many words in the file for the requested range [0:16383].
 No input data buffer
 No output buffer
 Running userlogic for maximum of 1000 cycles
 VCD info: dumpfile tests/jal/streamwave.vcd opened for output.
-Userlogic ran for 28 cycles
+t=5000 PC=0x00000000
+t=5000 rs_addr=x rt_addr=x jr_pc=0xxxxxxxxx jump_reg=x
+t=15000 PC=0x00000000
+t=15000 rs_addr=0 rt_addr=16 jr_pc=0x00000000 jump_reg=0
+t=25000 PC=0x00000000
+t=25000 rs_addr=0 rt_addr=16 jr_pc=0x00000000 jump_reg=0
+t=35000 PC=0x00000004
+t=35000 rs_addr=0 rt_addr=16 jr_pc=0x00000000 jump_reg=0
+t=45000 PC=0x00000008
+t=45000 rs_addr=0 rt_addr=17 jr_pc=0x00000000 jump_reg=0
+t=55000 WB: reg[16] <= 0x80020000
+t=55000 PC=0x0000000c
+t=55000 rs_addr=0 rt_addr=18 jr_pc=0x00000000 jump_reg=0
+t=65000 WB: reg[16] <= 0x80020000
+t=65000 PC=0x00000010
+t=65000 rs_addr=0 rt_addr=15 jr_pc=0x00000000 jump_reg=0
+t=75000 WB: reg[17] <= 0x00000001
+t=75000 PC=0x00000014
+t=75000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+t=85000 WB: reg[18] <= 0x00000001
+t=85000 PC=0x00000018
+t=85000 rs_addr=15 rt_addr=15 jr_pc=0x00000000 jump_reg=0
+t=95000 WB: reg[15] <= 0x00000000
+t=95000 PC=0x000000a0
+t=95000 rs_addr=15 rt_addr=15 jr_pc=0x00000001 jump_reg=0
+t=105000 WB: reg[31] <= 0x00000018
+t=105000 PC=0x000000a4
+t=105000 rs_addr=15 rt_addr=15 jr_pc=0x00000009 jump_reg=0
+t=115000 WB: reg[15] <= 0x00000001
+t=115000 PC=0x000000a8
+t=115000 rs_addr=31 rt_addr=0 jr_pc=0x00000018 jump_reg=1
+t=125000 WB: reg[15] <= 0x00000009
+t=125000 PC=0x000000ac
+t=125000 rs_addr=15 rt_addr=15 jr_pc=0x0000000b jump_reg=0
+t=135000 WB: reg[15] <= 0x0000000b
+t=135000 PC=0x00000018
+t=135000 rs_addr=31 rt_addr=20 jr_pc=0x00000018 jump_reg=0
+t=145000 PC=0x0000001c
+t=145000 rs_addr=15 rt_addr=15 jr_pc=0x0000000f jump_reg=0
+t=155000 WB: reg[15] <= 0x0000000f
+t=155000 PC=0x00000020
+t=155000 rs_addr=0 rt_addr=10 jr_pc=0x00000000 jump_reg=0
+t=165000 WB: reg[20] <= 0x00000018
+t=165000 PC=0x00000024
+t=165000 rs_addr=15 rt_addr=10 jr_pc=0x00000017 jump_reg=0
+t=175000 WB: reg[15] <= 0x00000017
+t=175000 PC=0x00000028
+t=175000 rs_addr=0 rt_addr=11 jr_pc=0x00000000 jump_reg=0
+t=185000 WB: reg[10] <= 0x0000000f
+t=185000 PC=0x0000002c
+t=185000 rs_addr=0 rt_addr=13 jr_pc=0x00000000 jump_reg=0
+t=195000 WB: reg[11] <= 0x00000018
+t=195000 PC=0x00000030
+t=195000 rs_addr=13 rt_addr=12 jr_pc=0x00000001 jump_reg=0
+t=205000 WB: reg[12] <= 0x00000001
+t=205000 PC=0x00000034
+t=205000 rs_addr=18 rt_addr=13 jr_pc=0x00000001 jump_reg=0
+t=215000 WB: reg[13] <= 0x00000001
+t=215000 PC=0x00000038
+t=215000 rs_addr=0 rt_addr=14 jr_pc=0x00000000 jump_reg=0
+t=225000 WB: reg[13] <= 0x00000000
+t=225000 PC=0x0000003c
+t=225000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+t=235000 WB: reg[18] <= 0x00000000
+t=235000 PC=0x00000040
+t=235000 rs_addr=14 rt_addr=14 jr_pc=0x00000000 jump_reg=0
+t=245000 WB: reg[14] <= 0x00000000
+t=245000 PC=0x000000ac
+t=245000 rs_addr=14 rt_addr=14 jr_pc=0x00000001 jump_reg=0
+t=255000 WB: reg[31] <= 0x00000040
+t=255000 PC=0x000000b0
+t=255000 rs_addr=31 rt_addr=20 jr_pc=0x00000040 jump_reg=0
+t=265000 WB: reg[14] <= 0x00000001
+t=265000 PC=0x000000b4
+t=265000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+t=275000 WB: reg[14] <= 0x00000041
+t=275000 PC=0x000000b8
+t=275000 rs_addr=14 rt_addr=14 jr_pc=0x00000041 jump_reg=0
+t=285000 WB: reg[20] <= 0x00000040
+t=285000 PC=0x000000c4
+t=285000 rs_addr=14 rt_addr=14 jr_pc=0x00000043 jump_reg=0
+t=295000 WB: reg[31] <= 0x000000b8
+t=295000 PC=0x000000c8
+t=295000 rs_addr=14 rt_addr=14 jr_pc=0x00000047 jump_reg=0
+t=305000 WB: reg[14] <= 0x00000043
+t=305000 PC=0x000000cc
+t=305000 rs_addr=31 rt_addr=0 jr_pc=0x000000b8 jump_reg=1
+t=315000 WB: reg[14] <= 0x00000047
+t=315000 PC=0x000000d0
+t=315000 rs_addr=14 rt_addr=14 jr_pc=0x00000057 jump_reg=0
+t=325000 WB: reg[14] <= 0x00000057
+t=325000 PC=0x000000b8
+t=325000 rs_addr=31 rt_addr=0 jr_pc=0x000000b8 jump_reg=1
+t=335000 PC=0x000000bc
+t=335000 rs_addr=14 rt_addr=14 jr_pc=0x00000077 jump_reg=0
+t=345000 WB: reg[14] <= 0x00000077
+t=345000 PC=0x000000b8
+t=345000 rs_addr=20 rt_addr=0 jr_pc=0x00000040 jump_reg=1
+t=355000 PC=0x000000bc
+t=355000 rs_addr=14 rt_addr=14 jr_pc=0x0000007b jump_reg=0
+t=365000 WB: reg[14] <= 0x0000007b
+t=365000 PC=0x00000040
+t=365000 rs_addr=20 rt_addr=0 jr_pc=0x00000040 jump_reg=1
+t=375000 PC=0x00000044
+t=375000 rs_addr=14 rt_addr=14 jr_pc=0x0000007f jump_reg=0
+t=385000 WB: reg[14] <= 0x0000007f
+t=385000 PC=0x00000040
+t=385000 rs_addr=0 rt_addr=10 jr_pc=0x00000000 jump_reg=0
+t=395000 PC=0x00000044
+t=395000 rs_addr=14 rt_addr=14 jr_pc=0x000000bf jump_reg=0
+t=405000 WB: reg[14] <= 0x000000bf
+t=405000 PC=0x00000048
+t=405000 rs_addr=0 rt_addr=10 jr_pc=0x00000000 jump_reg=0
+t=415000 WB: reg[10] <= 0x0000007f
+t=415000 PC=0x0000004c
+t=415000 rs_addr=14 rt_addr=10 jr_pc=0x000000ff jump_reg=0
+t=425000 WB: reg[14] <= 0x000000ff
+t=425000 PC=0x00000050
+t=425000 rs_addr=0 rt_addr=11 jr_pc=0x00000000 jump_reg=0
+t=435000 WB: reg[10] <= 0x0000007f
+t=435000 PC=0x00000054
+t=435000 rs_addr=0 rt_addr=13 jr_pc=0x00000000 jump_reg=0
+t=445000 WB: reg[11] <= 0x00000080
+t=445000 PC=0x00000058
+t=445000 rs_addr=13 rt_addr=12 jr_pc=0x00000001 jump_reg=0
+t=455000 WB: reg[12] <= 0x00000001
+t=455000 PC=0x0000005c
+t=455000 rs_addr=18 rt_addr=13 jr_pc=0x00000000 jump_reg=0
+t=465000 WB: reg[13] <= 0x00000001
+t=465000 PC=0x00000060
+t=465000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+t=475000 WB: reg[13] <= 0x00000000
+t=475000 PC=0x00000064
+t=475000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+t=485000 WB: reg[18] <= 0x00000000
+t=485000 PC=0x000000d0
+t=485000 rs_addr=0 rt_addr=8 jr_pc=0x00000000 jump_reg=0
+t=495000 WB: reg[31] <= 0x00000064
+t=495000 PC=0x000000d4
+t=495000 rs_addr=31 rt_addr=0 jr_pc=0x00000064 jump_reg=1
+t=505000 WB: reg[0] <= 0x00000000
+t=505000 PC=0x000000d8
+t=505000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+t=515000 WB: reg[8] <= 0x00000000
+t=515000 PC=0x00000064
+t=515000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+t=525000 PC=0x00000068
+t=525000 rs_addr=0 rt_addr=8 jr_pc=0x00000000 jump_reg=0
+t=535000 WB: reg[0] <= 0x00000000
+t=535000 PC=0x0000006c
+t=535000 rs_addr=8 rt_addr=8 jr_pc=0x00000000 jump_reg=0
+t=545000 WB: reg[0] <= 0x00000000
+t=545000 PC=0x00000070
+t=545000 rs_addr=0 rt_addr=31 jr_pc=0x00000000 jump_reg=0
+t=555000 WB: reg[8] <= 0x00000000
+t=555000 PC=0x00000074
+t=555000 rs_addr=0 rt_addr=9 jr_pc=0x00000000 jump_reg=0
+t=565000 WB: reg[8] <= 0x00000064
+t=565000 PC=0x00000078
+t=565000 rs_addr=0 rt_addr=8 jr_pc=0x00000000 jump_reg=0
+t=575000 WB: reg[9] <= 0x00000640
+t=575000 PC=0x0000007c
+t=575000 rs_addr=0 rt_addr=10 jr_pc=0x00000000 jump_reg=0
+t=585000 WB: reg[9] <= 0x00000064
+t=585000 PC=0x00000080
+t=585000 rs_addr=9 rt_addr=10 jr_pc=0x00000064 jump_reg=0
+t=595000 WB: reg[10] <= 0x00000640
+t=595000 PC=0x00000084
+t=595000 rs_addr=0 rt_addr=11 jr_pc=0x00000000 jump_reg=0
+t=605000 WB: reg[10] <= 0x00000064
+t=605000 PC=0x00000088
+t=605000 rs_addr=0 rt_addr=13 jr_pc=0x00000000 jump_reg=0
+t=615000 WB: reg[11] <= 0x00000000
+t=615000 PC=0x0000008c
+t=615000 rs_addr=13 rt_addr=12 jr_pc=0x00000001 jump_reg=0
+t=625000 WB: reg[12] <= 0x00000000
+t=625000 PC=0x00000090
+t=625000 rs_addr=18 rt_addr=13 jr_pc=0x00000000 jump_reg=0
+t=635000 WB: reg[13] <= 0x00000001
+t=635000 PC=0x00000094
+t=635000 rs_addr=16 rt_addr=18 jr_pc=0x80020000 jump_reg=0
+t=645000 WB: reg[13] <= 0x00000001
+t=645000 MEM WRITE: addr=0x80020004 data=0x00000000
+t=645000 PC=0x00000098
+t=645000 rs_addr=16 rt_addr=17 jr_pc=0x80020000 jump_reg=0
+t=655000 WB: reg[18] <= 0x00000000
+t=655000 MEM WRITE: addr=0x80020000 data=0x00000001
+t=655000 PC=0x0000009c
+t=655000 rs_addr=0 rt_addr=0 jr_pc=0x00000000 jump_reg=0
+Userlogic ran for 63 cycles
 status register = 1
 test register = 0
-harness/userlogic_test.v:155: $finish called at 310000 (1ps)
+harness/userlogic_test.v:155: $finish called at 660000 (1ps)

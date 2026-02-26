@@ -8,55 +8,69 @@ Disassembly of section .text:
        0:	3c108002 	lui	s0,0x8002
        4:	34110001 	li	s1,0x1
        8:	34120001 	li	s2,0x1
-       c:	3c1d8003 	lui	sp,0x8003
-      10:	37bdf000 	ori	sp,sp,0xf000
-      14:	340f0000 	li	t7,0x0
-      18:	0c00001d 	jal	74 <func1>
-      1c:	25ef0001 	addiu	t7,t7,1
+       c:	340f0000 	li	t7,0x0
+      10:	0c000028 	jal	a0 <func1>
+      14:	25ef0001 	addiu	t7,t7,1
 
-00000020 <after_func1>:
-      20:	25ef0008 	addiu	t7,t7,8
-      24:	340a000f 	li	t2,0xf
-      28:	01ea5826 	xor	t3,t7,t2
-      2c:	000b602b 	sltu	t4,zero,t3
-      30:	340d0001 	li	t5,0x1
-      34:	01ac6823 	subu	t5,t5,t4
-      38:	024d9024 	and	s2,s2,t5
-      3c:	340e0000 	li	t6,0x0
-      40:	0c000020 	jal	80 <func2>
-      44:	25ce0001 	addiu	t6,t6,1
+00000018 <after_func1>:
+      18:	25ef0008 	addiu	t7,t7,8
+      1c:	340a000f 	li	t2,0xf
+      20:	01ea5826 	xor	t3,t7,t2
+      24:	000b602b 	sltu	t4,zero,t3
+      28:	340d0001 	li	t5,0x1
+      2c:	01ac6823 	subu	t5,t5,t4
+      30:	024d9024 	and	s2,s2,t5
+      34:	340e0000 	li	t6,0x0
+      38:	0c00002b 	jal	ac <func2>
+      3c:	25ce0001 	addiu	t6,t6,1
 
-00000048 <after_func2>:
-      48:	25ce0040 	addiu	t6,t6,64
-      4c:	340a007f 	li	t2,0x7f
-      50:	01ca5826 	xor	t3,t6,t2
-      54:	000b602b 	sltu	t4,zero,t3
-      58:	340d0001 	li	t5,0x1
-      5c:	01ac6823 	subu	t5,t5,t4
-      60:	024d9024 	and	s2,s2,t5
-      64:	ae120004 	sw	s2,4(s0)
-      68:	ae110000 	sw	s1,0(s0)
-      6c:	0800001b 	j	6c <after_func2+0x24>
-      70:	00000000 	nop
+00000040 <after_func2>:
+      40:	25ce0040 	addiu	t6,t6,64
+      44:	340a007f 	li	t2,0x7f
+      48:	01ca5826 	xor	t3,t6,t2
+      4c:	000b602b 	sltu	t4,zero,t3
+      50:	340d0001 	li	t5,0x1
+      54:	01ac6823 	subu	t5,t5,t4
+      58:	024d9024 	and	s2,s2,t5
+      5c:	0c000034 	jal	d0 <func4>
+      60:	00000000 	nop
 
-00000074 <func1>:
-      74:	25ef0002 	addiu	t7,t7,2
-      78:	03e00008 	jr	ra
-      7c:	25ef0004 	addiu	t7,t7,4
+00000064 <after_func4>:
+      64:	3c080000 	lui	t0,0x0
+      68:	35080064 	ori	t0,t0,0x64
+      6c:	001f4900 	sll	t1,ra,0x4
+      70:	00094902 	srl	t1,t1,0x4
+      74:	00085100 	sll	t2,t0,0x4
+      78:	000a5102 	srl	t2,t2,0x4
+      7c:	012a5826 	xor	t3,t1,t2
+      80:	000b602b 	sltu	t4,zero,t3
+      84:	340d0001 	li	t5,0x1
+      88:	01ac6823 	subu	t5,t5,t4
+      8c:	024d9024 	and	s2,s2,t5
+      90:	ae120004 	sw	s2,4(s0)
+      94:	ae110000 	sw	s1,0(s0)
+      98:	08000026 	j	98 <after_func4+0x34>
+      9c:	00000000 	nop
 
-00000080 <func2>:
-      80:	27bdfff0 	addiu	sp,sp,-16
-      84:	afbf0000 	sw	ra,0(sp)
-      88:	0c000029 	jal	a4 <func3>
-      8c:	25ce0002 	addiu	t6,t6,2
-      90:	25ce0004 	addiu	t6,t6,4
-      94:	8fbf0000 	lw	ra,0(sp)
-      98:	27bd0010 	addiu	sp,sp,16
-      9c:	03e00008 	jr	ra
-      a0:	25ce0008 	addiu	t6,t6,8
+000000a0 <func1>:
+      a0:	25ef0002 	addiu	t7,t7,2
+      a4:	03e00008 	jr	ra
+      a8:	25ef0004 	addiu	t7,t7,4
 
-000000a4 <func3>:
-      a4:	25ce0010 	addiu	t6,t6,16
-      a8:	03e00008 	jr	ra
-      ac:	25ce0020 	addiu	t6,t6,32
+000000ac <func2>:
+      ac:	37f40000 	ori	s4,ra,0x0
+      b0:	0c000031 	jal	c4 <func3>
+      b4:	25ce0002 	addiu	t6,t6,2
+      b8:	25ce0004 	addiu	t6,t6,4
+      bc:	02800008 	jr	s4
+      c0:	25ce0008 	addiu	t6,t6,8
+
+000000c4 <func3>:
+      c4:	25ce0010 	addiu	t6,t6,16
+      c8:	03e00008 	jr	ra
+      cc:	25ce0020 	addiu	t6,t6,32
+
+000000d0 <func4>:
+      d0:	03e00008 	jr	ra
+      d4:	00000000 	nop
 	...

@@ -38,10 +38,17 @@ module decode (
 
     output wire stall,
 
+    input reg_we_wb,
+    input [4:0] reg_write_addr_wb,
+    input [31:0] reg_write_data_wb,
+
     input reg_we_ex,
     input [4:0] reg_write_addr_ex,
     input [31:0] alu_result_ex,
     input mem_read_ex,
+    input mem_we_ex,
+    input mem_we_mem,
+    input mem_we_wb,
 
     input reg_we_mem,
     input [4:0] reg_write_addr_mem,
@@ -82,6 +89,9 @@ module decode (
 //******************************************************************************
 
     wire isJ    = (op == `J);
+    wire isJAL  = (op == `JAL);
+    wire isJALR = (op == `SPECIAL) & (funct == `JALR);
+    wire isJR   = (op == `SPECIAL) & (funct == `JR);
 
 //******************************************************************************
 // shift instruction decode
@@ -144,7 +154,9 @@ module decode (
             end
             // pass link address to be stored in $ra
             {`JAL, `DC6}:       alu_opcode = `ALU_PASSY;
+            {`J, `DC6}:          alu_opcode = `ALU_PASSY;
             {`SPECIAL, `JALR}:  alu_opcode = `ALU_PASSY;
+            {`SPECIAL, `JR}:    alu_opcode = `ALU_PASSY;
             // or immediate with 0
             {`LUI, `DC6}:       alu_opcode = `ALU_PASSY;
             // ADDED
@@ -179,6 +191,10 @@ module decode (
 
     // FORWARDING LOGIC
 
+    // WB->ID forwarding (need for jal so that if jal then jr executes, jr can get correct $ra value)
+    wire forward_rs_wb = &{rs_addr == reg_write_addr_wb, rs_addr != `ZERO, reg_we_wb};
+    wire forward_rt_wb = &{rt_addr == reg_write_addr_wb, rt_addr != `ZERO, reg_we_wb, read_from_rt};
+
     // MEM->ID forwarding for rs and rt
     wire forward_rs_mem = &{rs_addr == reg_write_addr_mem, rs_addr != `ZERO, reg_we_mem};
     wire forward_rt_mem = &{rt_addr == reg_write_addr_mem, rt_addr != `ZERO, reg_we_mem, read_from_rt};
@@ -193,16 +209,20 @@ module decode (
     assign rs_data = 
         forward_rs_ex ? alu_result_ex :
         forward_rs_mem ? reg_write_data_mem :
+        forward_rs_wb  ? reg_write_data_wb :
                         rs_data_in;
 
     assign rt_data = 
         forward_rt_ex ? alu_result_ex :
         forward_rt_mem ? reg_write_data_mem : 
+        forward_rt_wb  ? reg_write_data_wb :
                         rt_data_in;
 
     // STALLING LOGIC - to finish implementing
 
     wire rs_mem_dependency = &{rs_addr == reg_write_addr_ex, mem_read_ex, rs_addr != `ZERO};
+
+    wire mem_sw_then_lw_hazard = mem_read & (mem_we_ex | mem_we_mem | mem_we_wb);
 
     wire isLUI = op == `LUI;
     wire read_from_rs = ~|{isLUI, jump_target, isShiftImm};
@@ -210,7 +230,7 @@ module decode (
     wire isALUImm = |{op == `ADDI, op == `ADDIU, op == `SLTI, op == `SLTIU, op == `ANDI, op == `ORI};
     wire read_from_rt = ~|{isLUI, jump_target, isALUImm, mem_read};
 
-    assign stall = rs_mem_dependency & read_from_rs;
+    assign stall = (rs_mem_dependency & read_from_rs) | mem_sw_then_lw_hazard;
 
     assign jr_pc = rs_data;
     assign mem_write_data = rt_data;
@@ -229,12 +249,13 @@ module decode (
     // for immediate operations, use Imm
     // otherwise use rt
 
-    assign alu_op_y = (use_imm) ? imm : rt_data;
-    assign reg_write_addr = (use_imm) ? rt_addr : rd_addr;
+    // originally had (isJR) ? jr_pc :  here but removed and still passes??
+    assign alu_op_y = ((isJAL) ? (pc + 32'd8) : ((use_imm) ? imm : rt_data));
+    assign reg_write_addr = (isJAL) ? (5'd31) : ((use_imm) ? rt_addr : rd_addr);
 
     // determine when to write back to a register (any operation that isn't an
     // unconditional store, non-linking branch, or non-linking jump)
-    assign reg_we = ~|{(mem_we & (op != `SC)), isJ, isBGEZNL, isBGTZ, isBLEZ, isBLTZNL, isBNE, isBEQ};
+    assign reg_we = ~|{(mem_we & (op != `SC)), isJ, isJR, isBGEZNL, isBGTZ, isBLEZ, isBLTZNL, isBNE, isBEQ};
 
     // determine whether a register write is conditional
     assign movn = &{op == `SPECIAL, funct == `MOVN};
@@ -271,7 +292,7 @@ module decode (
     assign jump_branch = |{isBEQ & isEqual,
                            isBNE & ~isEqual};
 
-    assign jump_target = isJ;
-    assign jump_reg = 1'b0;
+    assign jump_target = isJ | isJAL;
+    assign jump_reg = isJR;
 
 endmodule

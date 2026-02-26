@@ -1,10 +1,84 @@
+SIMULATION STARTED
 Instruction Memory: tests/lb/build/app.hex
 WARNING: harness/userlogic_test.v:63: $readmemh(tests/lb/build/app.hex): Too many words in the file for the requested range [0:16383].
 No input data buffer
 No output buffer
 Running userlogic for maximum of 1000 cycles
 VCD info: dumpfile tests/lb/streamwave.vcd opened for output.
-Userlogic ran for 32 cycles
+t=5000 PC=0x00000000
+t=15000 PC=0x00000000
+t=25000 PC=0x00000000
+t=35000 PC=0x00000004
+t=45000 PC=0x00000008
+t=55000 WB: reg[16] <= 0x80020000
+t=55000 PC=0x0000000c
+t=65000 WB: reg[16] <= 0x80020000
+t=65000 PC=0x00000010
+t=75000 WB: reg[17] <= 0x00000001
+t=75000 PC=0x00000014
+t=85000 WB: reg[8] <= 0x00000000
+t=85000 PC=0x00000018
+t=95000 WB: reg[8] <= 0x00003210
+t=95000 PC=0x0000001c
+t=105000 WB: reg[9] <= 0xde0f0000
+t=105000 MEM WRITE: addr=0x00003210 data=0xde0fbeef en=1111
+t=105000 STALL: mem_we_ex=1 mem_we_mem=0 mem_read_ex=0
+t=105000 PC=0x00000020
+t=115000 WB: reg[9] <= 0xde0fbeef
+t=115000 PC=0x00000020
+t=125000 MEM READ: addr=0x00003210 data=0xxxxxxxxx
+t=125000 PC=0x00000024
+t=135000 MEM READ: addr=0x00003211 data=0xde0fbeef
+t=135000 PC=0x00000028
+t=145000 WB: reg[18] <= 0xffffffde
+t=145000 MEM READ: addr=0x00003212 data=0xde0fbeef
+t=145000 PC=0x0000002c
+t=155000 WB: reg[19] <= 0x0000000f
+t=155000 MEM READ: addr=0x00003213 data=0xde0fbeef
+t=155000 PC=0x00000030
+t=165000 WB: reg[20] <= 0xffffffbe
+t=165000 PC=0x00000034
+t=175000 WB: reg[21] <= 0xffffffef
+t=175000 PC=0x00000038
+t=185000 WB: reg[10] <= 0xffff0000
+t=185000 PC=0x0000003c
+t=195000 WB: reg[10] <= 0xffffffde
+t=195000 PC=0x00000040
+t=205000 WB: reg[11] <= 0x0000000f
+t=205000 PC=0x00000044
+t=215000 WB: reg[12] <= 0xffff0000
+t=215000 PC=0x00000048
+t=225000 WB: reg[12] <= 0xffffffbe
+t=225000 PC=0x0000004c
+t=235000 WB: reg[13] <= 0xffff0000
+t=235000 PC=0x00000050
+t=245000 WB: reg[13] <= 0xffffffef
+t=245000 PC=0x00000054
+t=255000 WB: reg[3] <= 0x00000000
+t=255000 PC=0x00000058
+t=265000 WB: reg[2] <= 0x00000001
+t=265000 PC=0x0000005c
+t=275000 WB: reg[3] <= 0x00000000
+t=275000 PC=0x00000060
+t=285000 WB: reg[3] <= 0x00000001
+t=285000 PC=0x00000064
+t=295000 WB: reg[2] <= 0x00000001
+t=295000 PC=0x00000068
+t=305000 WB: reg[3] <= 0x00000000
+t=305000 PC=0x0000006c
+t=315000 WB: reg[3] <= 0x00000001
+t=315000 PC=0x00000070
+t=325000 WB: reg[2] <= 0x00000001
+t=325000 PC=0x00000074
+t=335000 WB: reg[3] <= 0x00000000
+t=335000 PC=0x00000078
+t=345000 WB: reg[3] <= 0x00000001
+t=345000 MEM WRITE: addr=0x80020004 data=0x00000001 en=1111
+t=345000 PC=0x0000007c
+t=355000 WB: reg[2] <= 0x00000001
+t=355000 MEM WRITE: addr=0x80020000 data=0x00000001 en=1111
+t=355000 PC=0x00000080
+Userlogic ran for 33 cycles
 status register = 1
 test register = 1
-harness/userlogic_test.v:155: $finish called at 350000 (1ps)
+harness/userlogic_test.v:155: $finish called at 360000 (1ps)

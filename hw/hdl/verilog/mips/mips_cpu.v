@@ -36,7 +36,7 @@ module mips_cpu (
     wire [31:0] alu_op_x_id, alu_op_y_id, alu_op_x_ex, alu_op_y_ex;
     wire [31:0] alu_result_ex, alu_result_mem;
     wire alu_op_y_zero_ex;
-    wire mem_we_id, mem_we_ex;
+    wire mem_we_id, mem_we_ex, mem_we_mem, mem_we_wb;
     wire mem_read_id, mem_read_ex, mem_read_mem;
     wire mem_byte_id, mem_byte_ex, mem_byte_mem;
     wire mem_half_id, mem_half_ex, mem_half_mem;
@@ -56,6 +56,8 @@ module mips_cpu (
         .en             (en_if),
         .jump_target    (jump_target_id),
         .jump_branch    (jump_branch_id),
+        .jump_reg       (jump_reg_id),
+        .jr_pc          (jr_pc_id),
         .pc_id          (pc_id),
         .instr_id       (instr_id[25:0]),
         .pc             (pc_if)
@@ -67,7 +69,8 @@ module mips_cpu (
     dffare #(32) pc_if2id (.clk(clk), .r(rst), .en(en_if), .d(pc_if), .q(pc_id));
 
     // Saved ID instruction after a stall
-    dffare #(32) instr_sav_dff (.clk(clk), .r(rst), .en(en), .d(instr), .q(instr_sav));
+    wire stall_save = en & stall & ~stall_r;
+    dffare #(32) instr_sav_dff (.clk(clk), .r(rst), .en(stall_save), .d(instr), .q(instr_sav));
     dffare #(1) stall_f_dff (.clk(clk), .r(rst), .en(en), .d(stall), .q(stall_r));
     assign instr_id = (stall_r) ? instr_sav : instr;
 
@@ -110,11 +113,19 @@ module mips_cpu (
         .reg_write_addr_ex  (reg_write_addr_ex),
         .alu_result_ex      (alu_result_ex),
         .mem_read_ex        (mem_read_ex),
+        .mem_we_ex          (mem_we_ex),
+        .mem_we_mem         (mem_we_mem),
+        .mem_we_wb          (mem_we_wb),
 
         // inputs for forwarding/stalling from M
         .reg_we_mem         (reg_we_mem),
         .reg_write_addr_mem (reg_write_addr_mem),
-        .reg_write_data_mem (reg_write_data_mem)
+        .reg_write_data_mem (reg_write_data_mem),
+
+        // inputs for forwarding/stalling from W
+        .reg_we_wb          (reg_we_wb),
+        .reg_write_addr_wb  (reg_write_addr_wb),
+        .reg_write_data_wb  (reg_write_data_wb)
     );
 
     // Load-linked / Store-conditional
@@ -161,6 +172,7 @@ module mips_cpu (
     dffare mem_byte_ex2mem (.clk(clk), .r(rst), .en(en), .d(mem_byte_ex), .q(mem_byte_mem));
     dffare mem_half_ex2mem (.clk(clk), .r(rst), .en(en), .d(mem_half_ex), .q(mem_half_mem));
     dffare mem_signextend_ex2mem (.clk(clk), .r(rst), .en(en), .d(mem_signextend_ex), .q(mem_signextend_mem));
+    dffarre mem_we_ex2mem  (.clk(clk), .r(rst_id), .en(en), .d(mem_we_ex), .q(mem_we_mem));
 
     // needed for W stage
     dffare #(5) reg_write_addr_ex2mem (.clk(clk), .r(rst), .en(en), .d(reg_write_addr_ex), .q(reg_write_addr_mem));
@@ -194,6 +206,7 @@ module mips_cpu (
     dffare #(32) reg_write_data_mem2wb (.clk(clk), .r(rst), .en(en), .d(reg_write_data_mem), .q(reg_write_data_wb));
     dffare #(5) reg_write_addr_mem2wb (.clk(clk), .r(rst), .en(en), .d(reg_write_addr_mem), .q(reg_write_addr_wb));
     dffare reg_we_mem2wb (.clk(clk), .r(rst), .en(en), .d(reg_we_mem), .q(reg_we_wb));
+    dffare mem_we_mem2wb (.clk(clk), .r(rst), .en(en), .d(mem_we_mem), .q(mem_we_wb));
 
     regfile w_stage (
         .clk            (clk),
@@ -207,5 +220,24 @@ module mips_cpu (
         .rs_data        (rs_data_id),
         .rt_data        (rt_data_id)
     );
+initial begin
+    $display("SIMULATION STARTED");
+end
+
+always @(posedge clk) begin
+    if (reg_we_wb)
+        $display("t=%0t WB: reg[%0d] <= 0x%08x", 
+                  $time, reg_write_addr_wb, reg_write_data_wb);
+    if (|mem_write_en)
+        $display("t=%0t MEM WRITE: addr=0x%08x data=0x%08x", 
+                  $time, mem_addr, mem_write_data);
+    if (mem_read_en)
+        $display("t=%0t MEM READ: addr=0x%08x data=0x%08x", 
+                  $time, mem_addr, mem_read_data);
+    $display("t=%0t PC=0x%08x", $time, pc);
+
+    $display("t=%0t rs_addr=%0d rt_addr=%0d jr_pc=0x%08x jump_reg=%b", 
+          $time, rs_addr_id, rt_addr_id, jr_pc_id, jump_reg_id);
+end
 
 endmodule
