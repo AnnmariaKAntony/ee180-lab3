@@ -11,6 +11,8 @@ module instruction_fetch (
     input en,
     input jump_branch,
     input jump_target,
+    input jump_reg,
+    input [31:0] jr_pc,
     input [31:0] pc_id,
     input [25:0] instr_id,  // Lower 26 bits of the instruction
 
@@ -24,7 +26,8 @@ module instruction_fetch (
     // branch target = PC + 4 + sign extended offset (16 bits) << 2
     wire [31:0] branch_target = pc_id_p4 + {{14{instr_id[15]}}, instr_id[15:0], 2'b0}; 
 
-    wire [31:0] pc_next = jump_branch ? branch_target :
+    wire [31:0] pc_next = jump_reg ? jr_pc :
+                          jump_branch ? branch_target :
                           jump_target ? j_addr : 
                           (pc + 3'h4);
 

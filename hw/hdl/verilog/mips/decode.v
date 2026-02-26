@@ -82,6 +82,9 @@ module decode (
 //******************************************************************************
 
     wire isJ    = (op == `J);
+    wire isJAL  = (op == `JAL);
+    wire isJR   = (op == `SPECIAL) & (funct == `JR);
+    wire isJALR = (op == `SPECIAL) & (funct == `JALR);
 
 //******************************************************************************
 // shift instruction decode
@@ -229,8 +232,11 @@ module decode (
     // for immediate operations, use Imm
     // otherwise use rt
 
-    assign alu_op_y = (use_imm) ? imm : rt_data;
-    assign reg_write_addr = (use_imm) ? rt_addr : rd_addr;
+    wire [31:0] pc_plus_8 = pc + 32'd8;
+    assign alu_op_y = (isJAL | isJALR) ? pc_plus_8 :
+                      (use_imm) ? imm : rt_data;
+    assign reg_write_addr = isJAL ? `RA :
+                            (use_imm) ? rt_addr : rd_addr;
 
     // determine when to write back to a register (any operation that isn't an
     // unconditional store, non-linking branch, or non-linking jump)
@@ -275,7 +281,7 @@ module decode (
                            isBLEZ & (rs_data[31] | (rs_data == 0)),
                            isBLTZNL & rs_data[31]};
 
-    assign jump_target = isJ;
-    assign jump_reg = 1'b0;
+    assign jump_target = isJ | isJAL;
+    assign jump_reg = isJR | isJALR;
 
 endmodule

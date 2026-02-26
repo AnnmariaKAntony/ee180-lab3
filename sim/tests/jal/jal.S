@@ -28,8 +28,7 @@ boot:
     ori     $s2, $zero, 1          # overall_ok = 1
 
     # Put stack somewhere safe in kernel segment for our save/restore test
-    lui     $sp, 0x8003
-    ori     $sp, $sp, 0xF000       # $sp = 0x8003F000
+    ori     $sp, $zero, 0x3F00     # $sp = 0x3F00 (local storage)
 
     ###########################################################################
     # Helper convention (no macros):

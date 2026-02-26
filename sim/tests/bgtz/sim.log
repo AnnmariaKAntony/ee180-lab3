@@ -4,7 +4,7 @@ No input data buffer
 No output buffer
 Running userlogic for maximum of 1000 cycles
 VCD info: dumpfile tests/bgtz/streamwave.vcd opened for output.
-Userlogic ran for 65 cycles
+Userlogic ran for 61 cycles
 status register = 1
-test register = 0
-harness/userlogic_test.v:155: $finish called at 680000 (1ps)
+test register = 1
+harness/userlogic_test.v:155: $finish called at 640000 (1ps)
