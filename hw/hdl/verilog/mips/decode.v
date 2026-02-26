@@ -155,6 +155,7 @@ module decode (
             {`SH, `DC6}:        alu_opcode = `ALU_ADD;
             {`SPECIAL, `SRA}:   alu_opcode = `ALU_SRA;
             {`SPECIAL, `SRAV}:  alu_opcode = `ALU_SRA;
+            {`LL, `DC6}:        alu_opcode = `ALU_ADD;
             default:            alu_opcode = `ALU_PASSX;
     	endcase
     end
@@ -250,7 +251,7 @@ module decode (
 // Memory control
 //******************************************************************************
     assign mem_we = |{op == `SW, op == `SB, op == `SC, op == `SH};    // write to memory
-    assign mem_read = |{op == `LW, op == `LB, op == `LBU, op == `LH};  // read from memory   
+    assign mem_read = |{op == `LW, op == `LB, op == `LBU, op == `LH, op == `LL};  // read from memory   
 
     assign mem_half = |{op == `LH, op == `SH}; // memory operations use only half byte
 
@@ -263,10 +264,10 @@ module decode (
     assign mem_sc_id = (op == `SC);
 
     // 'atomic_id' is high when a load-linked has not been followed by a store.
-    assign atomic_id = 1'b0;
+    assign atomic_id = (op == `LL);
 
     // 'mem_sc_mask_id' is high when a store conditional should not store
-    assign mem_sc_mask_id = 1'b0;
+    assign mem_sc_mask_id = mem_sc_id & ~atomic_ex;
 
 //******************************************************************************
 // Branch resolution

@@ -26,8 +26,8 @@ boot:
     ori     $s2, $zero, 1          # overall_ok = 1
 
     # Scratch RAM base for test data (pick a safe RAM region)
-    lui     $s3, 0x8003
-    ori     $s3, $s3, 0xE000       # $s3 = 0x8003E000
+    lui     $s3, 0x0000
+    ori     $s3, $s3, 0x3000       # $s3 = 0x00003000
 
     ###########################################################################
     # Helper convention (no macros):
