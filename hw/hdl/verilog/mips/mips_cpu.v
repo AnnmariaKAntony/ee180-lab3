@@ -31,7 +31,6 @@ module mips_cpu (
     wire [31:0] reg_write_data_mem, reg_write_data_wb;
     wire reg_we_id, reg_we_cond_ex, reg_we_ex, reg_we_mem, reg_we_wb;
     wire movn_id, movn_ex, movz_id, movz_ex;
-    wire atomic_id, atomic_ex;
     wire [3:0] alu_opcode_id, alu_opcode_ex;
     wire [31:0] alu_op_x_id, alu_op_y_id, alu_op_x_ex, alu_op_y_ex;
     wire [31:0] alu_result_ex, alu_result_mem;
@@ -43,8 +42,11 @@ module mips_cpu (
     wire mem_signextend_id, mem_signextend_ex, mem_signextend_mem;
     wire [7:0] mem_read_data_byte_select;
     wire [31:0] mem_read_data_byte_extend;
-    wire mem_atomic_id, mem_atomic_ex, mem_atomic_en, mem_sc_mask_id;
+    wire mem_atomic_id, mem_sc_mask_id;
     wire mem_sc_id, mem_sc_ex;
+    wire ll_ex;
+    reg reservation_valid;
+    reg [31:0] reservation_addr;
     wire alu_overflow;
     wire stall, stall_r;
     wire en_if = ~stall & en;
@@ -75,6 +77,13 @@ module mips_cpu (
 
     wire [29:0] instr_number_id = pc_id[31:2]; // useful for viewing waveforms
 
+    wire [31:0] mem_addr_id = alu_op_x_id + alu_op_y_id;
+    wire reservation_valid_next = ll_ex ? 1'b1 :
+                                  mem_we_ex ? 1'b0 :
+                                              reservation_valid;
+    wire [31:0] reservation_addr_next = ll_ex ? alu_result_ex : reservation_addr;
+    wire atomic_allowed_id = reservation_valid_next & (reservation_addr_next == mem_addr_id);
+
     decode d_stage (
         // inputs
         .pc                 (pc_id),
@@ -102,7 +111,7 @@ module mips_cpu (
         .rs_addr            (rs_addr_id),
         .rt_addr            (rt_addr_id),
         .atomic_id          (mem_atomic_id),
-        .atomic_ex          (mem_atomic_ex),
+        .atomic_ex          (atomic_allowed_id),
         .mem_sc_mask_id     (mem_sc_mask_id),
         .mem_sc_id          (mem_sc_id),
         .stall              (stall),
@@ -120,9 +129,17 @@ module mips_cpu (
     );
 
     // Load-linked / Store-conditional
-    wire atomic_en = en & mem_read_id;
-    dffarre       atomic  (.clk(clk), .ar(rst), .r(rst_id), .en(atomic_en), .d(mem_atomic_id), .q(mem_atomic_ex));
+    dffarre       ll_id2ex (.clk(clk), .ar(rst), .r(rst_id), .en(en), .d(mem_atomic_id), .q(ll_ex));
     dffarre       sc      (.clk(clk), .ar(rst), .r(rst_id), .en(en), .d(mem_sc_id), .q(mem_sc_ex));
+    always @(posedge clk or negedge rst) begin
+        if (~rst) begin
+            reservation_valid <= 1'b0;
+            reservation_addr <= 32'b0;
+        end else if (en) begin
+            reservation_valid <= reservation_valid_next;
+            reservation_addr <= reservation_addr_next;
+        end
+    end
 
     // needed for X stage
     dffarre #(32) alu_op_x_id2ex (.clk(clk), .ar(rst), .r(rst_id), .en(en), .d(alu_op_x_id), .q(alu_op_x_ex));
@@ -157,7 +174,7 @@ module mips_cpu (
 
     // needed for M stage
     wire [31:0] sc_result = {{31{1'b0}},(mem_sc_ex & mem_we_ex)};
-    wire [31:0] alu_sc_result_ex = alu_result_ex;   // TODO: Need to conditionally inject SC value
+    wire [31:0] alu_sc_result_ex = mem_sc_ex ? sc_result : alu_result_ex;
     dffare #(32) alu_result_ex2mem (.clk(clk), .r(rst), .en(en), .d(alu_sc_result_ex), .q(alu_result_mem));
     dffare mem_read_ex2mem (.clk(clk), .r(rst), .en(en), .d(mem_read_ex), .q(mem_read_mem));
     dffare mem_byte_ex2mem (.clk(clk), .r(rst), .en(en), .d(mem_byte_ex), .q(mem_byte_mem));
